@@ -1,19 +1,21 @@
-# 🎵 Music Genre Classification Dashboard
+# 🎵 Aplikasi Klasifikasi Genre Musik
 
-A Streamlit web application for classifying music genres from audio files using machine learning. This application allows you to upload audio files (WAV or MP3) and predict their music genre using a pre-trained Support Vector Machine model.
+Aplikasi web berbasis Streamlit untuk mengklasifikasikan genre musik dari file audio menggunakan machine learning. Aplikasi ini memungkinkan Anda mengunggah file audio (WAV atau MP3) dan memprediksi genre musiknya menggunakan model Support Vector Machine yang telah dilatih sebelumnya.
 
-## 🚀 Features
+## 🚀 Fitur
 
-- **Audio File Processing**: Upload and analyze WAV or MP3 audio files
-- **Pre-trained SVM Model**: Uses a Support Vector Machine model trained on the GTZAN dataset
-- **Feature Extraction**: Automatically extracts audio features (chroma, spectral centroid, bandwidth, etc.)
-- **Genre Prediction**: Predicts music genre with confidence scores
-- **Audio Visualization**: Displays waveform visualization of the uploaded audio
-- **Real-time Analysis**: Instant genre prediction with visual feedback
+- **Pemrosesan File Audio**: Unggah dan analisis file audio WAV atau MP3
+- **Model SVM Terlatih**: Menggunakan model Support Vector Machine yang dilatih pada dataset musik
+- **Ekstraksi Fitur**: Secara otomatis mengekstrak fitur audio (chroma, spectral centroid, bandwidth, dll.)
+- **Prediksi Genre**: Memprediksi genre musik dengan skor kepercayaan
+- **Visualisasi Audio**: Menampilkan visualisasi waveform dari audio yang diunggah
+- **Analisis Real-time**: Prediksi genre instan dengan umpan balik visual
+- **Perbandingan Algoritma**: Kemampuan untuk membandingkan berbagai algoritma klasifikasi
+- **Upload Dataset**: Kemampuan untuk mengunggah dataset baru untuk pelatihan model
 
-## 🎧 Supported Genres
+## 🎧 Genre yang Didukung
 
-The application can classify audio files into 10 different music genres:
+Aplikasi ini dapat mengklasifikasikan file audio ke dalam 10 genre musik yang berbeda:
 - Blues
 - Classical
 - Country
@@ -25,73 +27,87 @@ The application can classify audio files into 10 different music genres:
 - Reggae
 - Rock
 
-## 📁 Requirements
+## 📁 Persyaratan
 
-- Python 3.7 or higher
+- Python 3.7 atau lebih tinggi
 - Streamlit
-- Librosa (for audio processing)
+- Librosa (untuk pemrosesan audio)
 - Scikit-learn
 - Numpy
 - Pandas
 - Matplotlib
+- Seaborn
 
-## 🛠️ Installation
+## 🛠️ Instalasi
 
-1. Clone or download this repository
-2. Install the required packages:
+1. Clone atau unduh repositori ini
+2. Instal paket yang diperlukan:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Or install packages individually:
+Atau instal paket secara individual:
 ```bash
-pip install streamlit librosa scikit-learn pandas numpy matplotlib
+pip install streamlit librosa scikit-learn pandas numpy matplotlib seaborn
 ```
 
-## ▶️ How to Run
+## ▶️ Cara Menjalankan
 
 ```bash
 streamlit run app.py
 ```
 
-Then open your browser to the URL provided (typically http://localhost:8502)
+Kemudian buka browser Anda ke URL yang disediakan (biasanya http://localhost:8501)
 
-## 🎯 Usage
+## 🎯 Penggunaan
 
-1. **Upload Audio File**: Click "Browse files" to upload a WAV or MP3 audio file
-2. **Audio Playback**: Listen to your uploaded audio file directly in the app
-3. **Automatic Analysis**: The app will automatically extract features and predict the genre
-4. **View Results**: See the predicted genre and confidence score
-5. **Detailed Probabilities**: View probability distribution across all genres
-6. **Audio Visualization**: See the waveform visualization of your audio
+1. **Unggah File Audio**: Klik "Browse files" untuk mengunggah file audio WAV atau MP3
+2. **Pemutaran Audio**: Dengarkan file audio yang diunggah langsung di aplikasi
+3. **Analisis Otomatis**: Aplikasi akan secara otomatis mengekstrak fitur dan memprediksi genre
+4. **Lihat Hasil**: Lihat genre yang diprediksi dan skor kepercayaan
+5. **Probabilitas Detail**: Lihat distribusi probabilitas di semua genre
+6. **Visualisasi Audio**: Lihat visualisasi waveform dari audio Anda
 
-## 📈 Expected Performance
+## 📊 Fitur Dataset
 
-The pre-trained SVM model achieves approximately 68% accuracy on the test set. The app will display the confidence level for each prediction.
+Dataset yang digunakan untuk melatih model berisi fitur-fitur audio berikut:
+- Chroma STFT
+- RMSE (Root Mean Square Energy)
+- Spectral Centroid
+- Spectral Bandwidth
+- Rolloff
+- Zero Crossing Rate
+- MFCC (Mel-Frequency Cepstral Coefficients) 1-20
 
-## 🧠 Technical Details
+## 📈 Performa yang Diharapkan
 
-- **Model**: Support Vector Machine (SVM) trained on GTZAN dataset
-- **Feature Extraction**: Chroma STFT, RMSE, Spectral Centroid, Spectral Bandwidth, Rolloff, Zero Crossing Rate, and 20 MFCCs
-- **Audio Processing**: Librosa library for feature extraction
-- **Preprocessing**: StandardScaler for feature normalization
+Model SVM yang telah dilatih sebelumnya mencapai akurasi sekitar 68% pada set pengujian. Aplikasi akan menampilkan tingkat kepercayaan untuk setiap prediksi.
 
-## 📝 Notes
+## 🧠 Detail Teknis
 
-- The application works best with 30-second audio clips (same duration as training data)
-- For best results, use clean audio recordings without background noise
-- The model was trained on the GTZAN dataset, so it works best with similar music styles
-- MP3 files will be converted to WAV format for processing
+- **Model**: Support Vector Machine (SVM) dilatih pada dataset musik
+- **Ekstraksi Fitur**: Chroma STFT, RMSE, Spectral Centroid, Spectral Bandwidth, Rolloff, Zero Crossing Rate, dan 20 MFCC
+- **Pemrosesan Audio**: Librosa library untuk ekstraksi fitur
+- **Preprocessing**: StandardScaler untuk normalisasi fitur
+- **Handling Error**: Sistem fallback untuk menangani masalah kompatibilitas model dan scaler
 
-## 🤝 Contributing
+## 📝 Catatan
 
-Feel free to fork this project and submit pull requests with improvements. Suggestions for enhancements include:
-- Additional audio features
-- More advanced ML models
-- Improved visualization options
-- Support for longer audio files
+- Aplikasi bekerja paling baik dengan klip audio 30 detik (durasi yang sama dengan data pelatihan)
+- Untuk hasil terbaik, gunakan rekaman audio yang bersih tanpa noise latar belakang
+- Model dilatih pada dataset musik, sehingga bekerja paling baik dengan gaya musik serupa
+- File MP3 akan dikonversi ke format WAV untuk pemrosesan
 
-## 📄 License
+## 🤝 Kontribusi
 
-This project is open source and available under the MIT License.
+Jangan ragu untuk fork proyek ini dan mengirimkan pull request dengan perbaikan. Saran untuk peningkatan meliputi:
+- Fitur audio tambahan
+- Model ML yang lebih canggih
+- Opsi visualisasi yang lebih baik
+- Dukungan untuk file audio yang lebih panjang
+- Implementasi algoritma klasifikasi tambahan
+
+## 📄 Lisensi
+
+Proyek ini bersifat open source dan tersedia di bawah Lisensi MIT.
