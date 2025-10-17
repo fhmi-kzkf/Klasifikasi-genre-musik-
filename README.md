@@ -1,41 +1,39 @@
 # 🎵 Music Genre Classification Dashboard
 
-A Streamlit web application for classifying music genres based on audio features. This application allows you to upload a dataset, compare multiple machine learning algorithms, and predict music genres with high accuracy.
+A Streamlit web application for classifying music genres from audio files using machine learning. This application allows you to upload audio files (WAV or MP3) and predict their music genre using a pre-trained Support Vector Machine model.
 
 ## 🚀 Features
 
-- **Multiple ML Models**: Compare performance of 8 different machine learning algorithms
-- **Feature Selection**: Automatically select the most relevant features for classification
-- **Cross-Validation**: Evaluate model performance with cross-validation
-- **Ensemble Method**: Voting classifier that combines multiple models for better performance
-- **Detailed Evaluation**: Confusion matrices, classification reports, and accuracy metrics
-- **Prediction Pipeline**: Upload new data for genre prediction
-- **Export Results**: Download predictions as CSV file
+- **Audio File Processing**: Upload and analyze WAV or MP3 audio files
+- **Pre-trained SVM Model**: Uses a Support Vector Machine model trained on the GTZAN dataset
+- **Feature Extraction**: Automatically extracts audio features (chroma, spectral centroid, bandwidth, etc.)
+- **Genre Prediction**: Predicts music genre with confidence scores
+- **Audio Visualization**: Displays waveform visualization of the uploaded audio
+- **Real-time Analysis**: Instant genre prediction with visual feedback
 
-## 📊 Supported Models
+## 🎧 Supported Genres
 
-1. Logistic Regression
-2. Random Forest
-3. Support Vector Machine (SVM)
-4. K-Nearest Neighbors (KNN)
-5. Naive Bayes
-6. Gradient Boosting
-7. Neural Network (MLP)
-8. Ensemble (Voting Classifier)
+The application can classify audio files into 10 different music genres:
+- Blues
+- Classical
+- Country
+- Disco
+- Hip-Hop
+- Jazz
+- Metal
+- Pop
+- Reggae
+- Rock
 
-## 📁 Dataset Format
+## 📁 Requirements
 
-The application expects a CSV file with the following structure:
-- Multiple feature columns (numeric values)
-- Last column should contain the genre labels
-
-Example:
-```
-feature1,feature2,feature3,...,genre
-0.123,0.456,0.789,...,rock
-0.234,0.567,0.890,...,pop
-...
-```
+- Python 3.7 or higher
+- Streamlit
+- Librosa (for audio processing)
+- Scikit-learn
+- Numpy
+- Pandas
+- Matplotlib
 
 ## 🛠️ Installation
 
@@ -43,7 +41,12 @@ feature1,feature2,feature3,...,genre
 2. Install the required packages:
 
 ```bash
-pip install streamlit scikit-learn pandas numpy matplotlib seaborn
+pip install -r requirements.txt
+```
+
+Or install packages individually:
+```bash
+pip install streamlit librosa scikit-learn pandas numpy matplotlib
 ```
 
 ## ▶️ How to Run
@@ -52,42 +55,42 @@ pip install streamlit scikit-learn pandas numpy matplotlib seaborn
 streamlit run app.py
 ```
 
-Then open your browser to the URL provided (typically http://localhost:8501)
+Then open your browser to the URL provided (typically http://localhost:8502)
 
 ## 🎯 Usage
 
-1. **Upload Dataset**: Click "Browse files" to upload your CSV dataset
-2. **Feature Selection**: Adjust the number of features to use (5-50)
-3. **Model Training**: The app will automatically train all models
-4. **View Results**: See accuracy scores and confusion matrices for each model
-5. **Make Predictions**: Upload a new CSV file to predict genres
-6. **Download Results**: Get your predictions as a CSV file
+1. **Upload Audio File**: Click "Browse files" to upload a WAV or MP3 audio file
+2. **Audio Playback**: Listen to your uploaded audio file directly in the app
+3. **Automatic Analysis**: The app will automatically extract features and predict the genre
+4. **View Results**: See the predicted genre and confidence score
+5. **Detailed Probabilities**: View probability distribution across all genres
+6. **Audio Visualization**: See the waveform visualization of your audio
 
 ## 📈 Expected Performance
 
-With the enhanced feature selection and ensemble methods, the application should achieve accuracy above 80% for most music genre classification tasks. The app will display a warning if accuracy falls below this threshold with suggestions for improvement.
+The pre-trained SVM model achieves approximately 68% accuracy on the test set. The app will display the confidence level for each prediction.
 
 ## 🧠 Technical Details
 
-- **Feature Selection**: Uses SelectKBest with f_classif scoring
-- **Data Preprocessing**: StandardScaler for feature normalization
-- **Evaluation**: Cross-validation (optional) and train/test split
-- **Label Encoding**: Automatically handles categorical labels
+- **Model**: Support Vector Machine (SVM) trained on GTZAN dataset
+- **Feature Extraction**: Chroma STFT, RMSE, Spectral Centroid, Spectral Bandwidth, Rolloff, Zero Crossing Rate, and 20 MFCCs
+- **Audio Processing**: Librosa library for feature extraction
+- **Preprocessing**: StandardScaler for feature normalization
 
 ## 📝 Notes
 
-- The application assumes the last column in your dataset contains the genre labels
-- Only numeric features are used for training
-- For best results, ensure your dataset is balanced across genres
-- The ensemble method typically provides the best performance by combining multiple models
+- The application works best with 30-second audio clips (same duration as training data)
+- For best results, use clean audio recordings without background noise
+- The model was trained on the GTZAN dataset, so it works best with similar music styles
+- MP3 files will be converted to WAV format for processing
 
 ## 🤝 Contributing
 
 Feel free to fork this project and submit pull requests with improvements. Suggestions for enhancements include:
-- Additional feature selection methods
+- Additional audio features
 - More advanced ML models
 - Improved visualization options
-- Additional evaluation metrics
+- Support for longer audio files
 
 ## 📄 License
 
