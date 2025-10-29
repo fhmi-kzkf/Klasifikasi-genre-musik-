@@ -40,53 +40,75 @@ def load_all_files():
         scaler_file = 'scaler.pkl'
         encoder_file = 'label_encoder.pkl' # Nama file encoder
         
-        # Try loading the model with joblib first
+        # Try loading the model with multiple approaches
         try:
             model = joblib.load(model_file)
         except Exception as joblib_error:
+            st.warning(f"Joblib failed for model: {joblib_error}. Trying pickle...")
             try:
                 with open(model_file, 'rb') as f:
-                    model = pickle.load(f, fix_imports=True)
+                    model = pickle.load(f)
             except Exception as pickle_error:
+                st.warning(f"Pickle failed for model: {pickle_error}. Trying pickle with fix_imports...")
                 try:
                     with open(model_file, 'rb') as f:
-                        model = pickle.load(f, encoding='latin1')
-                except Exception as latin1_error:
-                    st.error(f"Gagal memuat model: {latin1_error}")
-                    return None, None, None
+                        model = pickle.load(f, fix_imports=True)
+                except Exception as fix_imports_error:
+                    st.warning(f"Pickle with fix_imports failed for model: {fix_imports_error}. Trying pickle with latin1...")
+                    try:
+                        with open(model_file, 'rb') as f:
+                            model = pickle.load(f, encoding='latin1')
+                    except Exception as latin1_error:
+                        st.error(f"All methods failed for model: {latin1_error}")
+                        return None, None, None
         
-        # Try loading the scaler with joblib first
+        # Try loading the scaler with multiple approaches
         try:
             scaler = joblib.load(scaler_file)
         except Exception as joblib_error:
+            st.warning(f"Joblib failed for scaler: {joblib_error}. Trying pickle...")
             try:
                 with open(scaler_file, 'rb') as f:
-                    scaler = pickle.load(f, fix_imports=True)
+                    scaler = pickle.load(f)
             except Exception as pickle_error:
+                st.warning(f"Pickle failed for scaler: {pickle_error}. Trying pickle with fix_imports...")
                 try:
                     with open(scaler_file, 'rb') as f:
-                        scaler = pickle.load(f, encoding='latin1')
-                except Exception as latin1_error:
+                        scaler = pickle.load(f, fix_imports=True)
+                except Exception as fix_imports_error:
+                    st.warning(f"Pickle with fix_imports failed for scaler: {fix_imports_error}. Trying pickle with latin1...")
                     try:
-                        scaler = create_new_scaler()
-                    except Exception as create_error:
-                        st.error(f"Gagal membuat scaler baru: {create_error}")
-                        return model, None, None
+                        with open(scaler_file, 'rb') as f:
+                            scaler = pickle.load(f, encoding='latin1')
+                    except Exception as latin1_error:
+                        try:
+                            scaler = create_new_scaler()
+                            st.info("Created new scaler from dataset")
+                        except Exception as create_error:
+                            st.error(f"Gagal membuat scaler baru: {create_error}")
+                            return model, None, None
         
-        # BLOK BARU UNTUK MEMUAT ENCODER
+        # Try loading the encoder with multiple approaches
         try:
             encoder = joblib.load(encoder_file)
         except Exception as joblib_error:
+            st.warning(f"Joblib failed for encoder: {joblib_error}. Trying pickle...")
             try:
                 with open(encoder_file, 'rb') as f:
-                    encoder = pickle.load(f, fix_imports=True)
+                    encoder = pickle.load(f)
             except Exception as pickle_error:
+                st.warning(f"Pickle failed for encoder: {pickle_error}. Trying pickle with fix_imports...")
                 try:
                     with open(encoder_file, 'rb') as f:
-                        encoder = pickle.load(f, encoding='latin1')
-                except Exception as latin1_error:
-                    st.error(f"Gagal memuat file label encoder: {latin1_error}")
-                    return model, scaler, None 
+                        encoder = pickle.load(f, fix_imports=True)
+                except Exception as fix_imports_error:
+                    st.warning(f"Pickle with fix_imports failed for encoder: {fix_imports_error}. Trying pickle with latin1...")
+                    try:
+                        with open(encoder_file, 'rb') as f:
+                            encoder = pickle.load(f, encoding='latin1')
+                    except Exception as latin1_error:
+                        st.error(f"Gagal memuat file label encoder: {latin1_error}")
+                        return model, scaler, None 
 
         # Mengembalikan 3 file
         return model, scaler, encoder
@@ -216,8 +238,7 @@ if uploaded_file is not None:
                     st.subheader("📋 Detail Probabilitas")
                     st.dataframe(prob_df.style.format({'Probabilitas': '{:.4f}'}))
                     
-                    # --- BLOK VISUALISASI WAVEFORM SUDAH DIHAPUS DARI SINI ---
-                    
+                    # --- BLOK VISUALISASI WAVEFORM SUDAH DIHAPUS DARI SINI ---  
                 else:
                     st.error("Gagal melakukan prediksi. Silakan coba file lain.")
             else:
